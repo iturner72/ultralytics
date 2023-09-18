@@ -90,6 +90,10 @@ class BaseTrainer:
         init_seeds(self.args.seed + 1 + RANK, deterministic=self.args.deterministic)
 
         # Dirs
+        if torch.cuda.is_available():
+            self.args.gpu_name = torch.cuda.get_device_name(0)
+        else:
+            self.args.gpu_name = "CPU"
         self.save_dir = get_save_dir(self.args)
         self.wdir = self.save_dir / 'weights'  # weights dir
         if RANK in (-1, 0):
