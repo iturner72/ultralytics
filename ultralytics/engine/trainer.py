@@ -94,6 +94,7 @@ class BaseTrainer:
         self.wdir = self.save_dir / 'weights'  # weights dir
         if RANK in (-1, 0):
             self.wdir.mkdir(parents=True, exist_ok=True)  # make dir
+            self.args.date_trained = datetime.now().strftime("%Y-%m-%d %H:%M:%S") # include training date 
             self.args.save_dir = str(self.save_dir)
             yaml_save(self.save_dir / 'args.yaml', vars(self.args))  # save run args
         self.last, self.best = self.wdir / 'last.pt', self.wdir / 'best.pt'  # checkpoint paths
